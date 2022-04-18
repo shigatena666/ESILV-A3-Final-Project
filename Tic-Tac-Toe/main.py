@@ -1,9 +1,11 @@
 from min_max_algorithm import MinMaxAlgorithm
 from board import Board
 from action import Action
+import utilities
 
 
 def new_game_state(board_state: Board, action_move: Action):
+    # warning, this will not directly modify the board_state.
 
     # update our board with that action.
     board_state = board_state.result(action_move)
@@ -41,21 +43,39 @@ if __name__ == "__main__":
 
             # if true, it means there is a winner.
             if board.has_game_ended():
-                print(board.winner(), "won")
+                print(board.get_winner(), "won")
                 break
 
         # ask the user to play and set it inside the board.
         user_input = input("x, y: ")
         coordonates = user_input.split(',')
+
+        # check if user provided right input types.
+        while not utilities.is_int(coordonates[0]) and not utilities.is_int(coordonates[1]):
+
+            # re-actualize user inputs.
+            print("[Error]: Please provided two coordonates (0-2).")
+            user_input = input("x, y: ")
+            coordonates = user_input.split(',')
+
+        # create the action the user provided.
         action = Action(int(coordonates[0]), int(coordonates[1]))
 
-        # TODO: Add a try except there to see if user provided right input.
-        # actualize the board state.
+        # check if user provided right input coordonates.
+        while board.get_current_game_state()[action.get_x()][action.get_y()] != ' ':
+
+            # re-actualize user inputs.
+            print("[Error]: Please provided two coordonates that are not already used (0-2).")
+            user_input = input("x, y: ")
+            coordonates = user_input.split(',')
+            action = Action(int(coordonates[0]), int(coordonates[1]))
+
+        # actualize the board state with the action.
         board = new_game_state(board, action)
 
         # if true, it means there is a winner.
         if board.has_game_ended():
-            print(board.winner(), "won")
+            print(board.get_winner(), "won")
             break
 
         # if IA plays second, put its play on the board.
@@ -69,5 +89,5 @@ if __name__ == "__main__":
 
             # if true, it means there is a winner.
             if board.has_game_ended():
-                print(board.winner(), "won")
+                print(board.get_winner(), "won")
                 break

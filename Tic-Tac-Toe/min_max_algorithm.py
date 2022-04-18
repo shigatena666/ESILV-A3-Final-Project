@@ -19,6 +19,10 @@ class MinMaxAlgorithm:
         for allowed_action in board_state.get_allowed_actions():
 
             # get the score of the move depending on maximizing or minimizing.
+            # this will get the score recursively, by trying to find the best move for the AI whilst still taking in
+            # consideration the best move for the opponent.
+            # This will either result in a win for the AI or a draw.
+
             if should_maximize:
                 action_score = self.max_value(board_state.result(allowed_action),
                                               -math.inf,
@@ -46,7 +50,7 @@ class MinMaxAlgorithm:
 
         # check if someone has won in case the game has ended.
         if board_state.has_game_ended():
-            return board_state.who_has_won()
+            return board_state.get_winner_as_int()
 
         # initialize our value to -infinity.
         value = -math.inf
@@ -73,7 +77,7 @@ class MinMaxAlgorithm:
 
         # check if someone has won in case the game has ended.
         if board_state.has_game_ended():
-            return board_state.who_has_won()
+            return board_state.get_winner_as_int()
 
         # initialize our value to +infinity.
         value = math.inf
