@@ -8,6 +8,7 @@ import utilities
 
 class Board:
 
+    # TODO: Replace O and X by consts.
     def __init__(self, first_player='X', array=None):
 
         # set the first player in the board.
@@ -38,7 +39,7 @@ class Board:
         if (self.__array == utilities.initial_state()).all():
             return self.__first_player
 
-        # let's count how many xs and os there is in the game.
+        # let's count how many xs and os there are in the game.
         x_counter = 0
         o_counter = 0
 
