@@ -36,7 +36,7 @@ if __name__ == "__main__":
         if ia_plays_first:
 
             # get the best move out of the board.
-            action = min_max_algo.minimize_or_maximize(board)
+            action = min_max_algo.alpha_beta_search(board)
 
             # actualize the board state.
             board = new_game_state(board, action)
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         if not ia_plays_first:
 
             # get the best move out of the board.
-            action = min_max_algo.minimize_or_maximize(board)
+            action = min_max_algo.alpha_beta_search(board)
 
             # actualize the board state.
             board = new_game_state(board, action)
