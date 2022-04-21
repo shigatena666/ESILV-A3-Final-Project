@@ -1,6 +1,7 @@
 class BitBoard:
 
     def __init__(self):
+
         # index 0 will be for the player X's board.
         # index 1 will be for the player O's board.
         self.__encoded_boards = [
@@ -19,6 +20,7 @@ class BitBoard:
         self.__moves = []
 
     def current_player(self):
+
         # return 0 if self.__counter % 2 == 0 else 1
         # should be slightly faster than the version above. Using the least significant bit (LSB) [rightmost bit] to get
         # whether it's odd (1) or even (0).
@@ -29,6 +31,8 @@ class BitBoard:
         return 0 if self.__counter & 1 == 0 else 1
 
     def get_encoded_boards(self):
+
+        # get the boards for X and O.
         return self.__encoded_boards
 
     def set(self, column_index):
@@ -52,7 +56,68 @@ class BitBoard:
         # increment our counter so that the next player will be playing.
         self.__counter += 1
 
+    def unset(self):
+
+        # decrease counter by 1 because it got increased at the last move.
+        self.__counter -= 1
+
+        # get the last played column for the last move.
+        last_played_column = self.__moves[self.__counter]
+
+        # remove one to our height indexes because the next move will be removed and not added, we need the last one.
+        self.__height_indexes[last_played_column] -= 1
+
+        # shift bits to the left
+        move = 1 << self.__height_indexes[last_played_column]
+
+        # set the board depending on the current player.
+        self.__encoded_boards[self.current_player()] ^= move
+
+    @staticmethod
+    def get_winner(bitboard):
+
+        # there is a difference of 1 vertically.
+        # there is a difference of 12 horizontally.
+        # there is a difference of either 13 or 11 vertically.
+        row_column_diagonal_numbers = [1, 12, 13, 11]
+
+        # iterate through our "magic numbers".
+        for row_column_diagonal_number in row_column_diagonal_numbers:
+
+            # get the current bitboard with the shifted one.
+            # this will prevent us to make more computation and multiply by 3.
+            shifted_bitboard = bitboard & (bitboard >> row_column_diagonal_number)
+
+            # TODO: understand this better.
+            if shifted_bitboard & (shifted_bitboard >> (2 * row_column_diagonal_number)) != 0:
+                return True
+
+        # else return false.
+        return False
+
+    def get_allowed_actions(self):
+
+        # prepare our list of moves.
+        moves = []
+
+        # create a mask for the additional column.
+        mask = 0b100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000
+
+        # iterate through our columns.
+        for column in range(0, 12):
+
+            # the bit isn't supposed to land in the additional column, which will mark it as full (1).
+            # get the ones that aren't full after the move (0).
+            if mask & (1 << self.__height_indexes[column]) == 0:
+                moves.append(column)
+
+        # return our list of move.
+        return moves
+
     def __str__(self):
+
+        # format our encoded board for O as a 144 bits string.
         format_to_full_bits = format(int(bin(self.__encoded_boards[0]), 2), '{fill}{width}b'.format(width=144, fill=0))
-        print(format_to_full_bits)
+
+        # get every 12 character so that instead of setting players in columns we can set them in rows.
         return ''.join([format_to_full_bits[i::12] for i in range(12)])
