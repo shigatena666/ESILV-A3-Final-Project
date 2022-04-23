@@ -1,3 +1,5 @@
+from utilities import *
+
 class BitBoard:
 
     def __init__(self):
@@ -38,7 +40,7 @@ class BitBoard:
     def set(self, column_index):
 
         # reverse column_index so that when we play on 0, we play on the left side of the board.
-        column_index = abs(column_index - 11)
+        column_index = 11 - column_index
 
         # shift bits to the left
         move = 1 << self.__height_indexes[column_index]
@@ -78,18 +80,21 @@ class BitBoard:
 
         # there is a difference of 1 vertically.
         # there is a difference of 12 horizontally.
-        # there is a difference of either 13 or 11 vertically.
+        # there is a difference of either 13 or 11 diagonaly (normal and reversed).
         row_column_diagonal_numbers = [1, 12, 13, 11]
 
         # iterate through our "magic numbers".
         for row_column_diagonal_number in row_column_diagonal_numbers:
 
-            # get the current bitboard with the shifted one.
-            # this will prevent us to make more computation and multiply by 3.
-            shifted_bitboard = bitboard & (bitboard >> row_column_diagonal_number)
-
-            # TODO: understand this better.
-            if shifted_bitboard & (shifted_bitboard >> (2 * row_column_diagonal_number)) != 0:
+            # check if when shifting at least one bit will be in common. If yes it means that they are aligned.
+            # Example   : 111100000000 (magic number will be one, thus shift by multiple of 1.)
+            # >> 1      : 011110000000
+            # >> 2      : 001111000000
+            # >> 3      : 000111100000
+            # &1,2,3    : 000100000000
+            if bitboard & (bitboard >> row_column_diagonal_number)\
+                        & (bitboard >> (2 * row_column_diagonal_number))\
+                        & (bitboard >> (3 * row_column_diagonal_number)) != 0:
                 return True
 
         # else return false.
@@ -106,9 +111,11 @@ class BitBoard:
         # iterate through our columns.
         for column in range(0, 12):
 
-            # the bit isn't supposed to land in the additional column, which will mark it as full (1).
+            # the bit isn't supposed to land in the additional column, which will mark it as full if it lands in (1).
             # get the ones that aren't full after the move (0).
-            if mask & (1 << self.__height_indexes[column]) == 0:
+            # since we reversed the set method with abs, the last height index is used for the first column.
+            # we need to reverse it as well in order to work correctly.
+            if mask & (1 << self.__height_indexes[11 - column]) == 0:
                 moves.append(column)
 
         # return our list of move.
