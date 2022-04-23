@@ -1,8 +1,9 @@
-from utilities import *
-
 class BitBoard:
 
-    def __init__(self):
+    def __init__(self, first_player='X'):
+
+        # set the first player in the board.
+        self.__first_player = first_player
 
         # index 0 will be for the player X's board.
         # index 1 will be for the player O's board.
@@ -31,6 +32,9 @@ class BitBoard:
         #           2 = 0010 : LSB is 0 => even
         #           3 = 0011 : LSB is 1 => even
         return 0 if self.__counter & 1 == 0 else 1
+
+    def get_initial_player(self):
+        return self.__first_player
 
     def get_encoded_boards(self):
 
@@ -92,9 +96,9 @@ class BitBoard:
             # >> 2      : 001111000000
             # >> 3      : 000111100000
             # &1,2,3    : 000100000000
-            if bitboard & (bitboard >> row_column_diagonal_number)\
-                        & (bitboard >> (2 * row_column_diagonal_number))\
-                        & (bitboard >> (3 * row_column_diagonal_number)) != 0:
+            if bitboard & (bitboard >> row_column_diagonal_number) \
+                    & (bitboard >> (2 * row_column_diagonal_number)) \
+                    & (bitboard >> (3 * row_column_diagonal_number)) != 0:
                 return True
 
         # else return false.
