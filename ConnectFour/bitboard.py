@@ -168,5 +168,21 @@ class BitBoard:
         format_to_full_bits_O = format(int(bin(self.__encoded_boards[1]), 2),
                                        '{fill}{width}b'.format(width=144, fill=0))
 
+        # prepare our string as a list.
+        format_to_board = ''
+
+        for i in range(0, len(format_to_full_bits_X)):
+
+            # if X's bit is 0 and O's bit is 1 then we put the character for O.
+            if format_to_full_bits_X[i] == '0' and format_to_full_bits_O[i] == '1':
+                format_to_board += 'O'
+
+            # as opposite, put X.
+            elif format_to_full_bits_X[i] == '1' and format_to_full_bits_O[i] == '0':
+                format_to_board += 'X'
+
+            else:
+                format_to_board += '.'
+
         # get every 12 character so that instead of setting players in columns we can set them in rows.
-        return ''.join([format_to_full_bits_X[i::12] for i in range(12)])
+        return ''.join([format_to_board[i::12] for i in range(12)])
