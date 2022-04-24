@@ -41,6 +41,27 @@ class BitBoard:
         # get the boards for X and O.
         return self.__encoded_boards
 
+    def get_allowed_actions(self):
+
+        # prepare our list of moves.
+        moves = []
+
+        # create a mask for the additional column.
+        mask = 0b100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000
+
+        # iterate through our columns.
+        for column in range(0, 12):
+
+            # the bit isn't supposed to land in the additional column, which will mark it as full if it lands in (1).
+            # get the ones that aren't full after the move (0).
+            # since we reversed the set method with abs, the last height index is used for the first column.
+            # we need to reverse it as well in order to work correctly.
+            if mask & (1 << self.__height_indexes[11 - column]) == 0:
+                moves.append(column)
+
+        # return our list of move.
+        return moves
+
     def set(self, column_index):
 
         # reverse column_index so that when we play on 0, we play on the left side of the board.
@@ -79,8 +100,7 @@ class BitBoard:
         # set the board depending on the current player.
         self.__encoded_boards[self.current_player()] ^= move
 
-    @staticmethod
-    def get_winner(bitboard):
+    def get_winner(self):
 
         # there is a difference of 1 vertically.
         # there is a difference of 12 horizontally.
@@ -96,39 +116,57 @@ class BitBoard:
             # >> 2      : 001111000000
             # >> 3      : 000111100000
             # &1,2,3    : 000100000000
-            if bitboard & (bitboard >> row_column_diagonal_number) \
-                    & (bitboard >> (2 * row_column_diagonal_number)) \
-                    & (bitboard >> (3 * row_column_diagonal_number)) != 0:
-                return True
+            if self.__encoded_boards[0] & (self.__encoded_boards[0] >> row_column_diagonal_number) \
+                    & (self.__encoded_boards[0] >> (2 * row_column_diagonal_number)) \
+                    & (self.__encoded_boards[0] >> (3 * row_column_diagonal_number)) != 0:
+                return 'X'
 
-        # else return false.
+            elif self.__encoded_boards[1] & (self.__encoded_boards[1] >> row_column_diagonal_number) \
+                    & (self.__encoded_boards[1] >> (2 * row_column_diagonal_number)) \
+                    & (self.__encoded_boards[1] >> (3 * row_column_diagonal_number)) != 0:
+                return 'O'
+
+        # else return None.
+        return None
+
+    def get_winner_as_int(self):
+
+        # get the winner from the board.
+        who_won = self.get_winner()
+
+        # if X won, return 1
+        if who_won == 'X':
+            return 1
+
+        # if O won, return -1.
+        elif who_won == 'O':
+            return -1
+
+        # return 0 if it's a draw.
+        else:
+            return 0
+
+    def has_game_ended(self):
+
+        # create the combination of the two separate boards as a string.
+        board = bin(self.__encoded_boards[0] | self.__encoded_boards[1])
+
+        # let's check if the board is full (all the bits are 1) or if there is a winner.
+        if (board == '1' * len(board)) or self.get_winner() is not None:
+            return True
+
+        # else return False.
         return False
-
-    def get_allowed_actions(self):
-
-        # prepare our list of moves.
-        moves = []
-
-        # create a mask for the additional column.
-        mask = 0b100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000_100000000000
-
-        # iterate through our columns.
-        for column in range(0, 12):
-
-            # the bit isn't supposed to land in the additional column, which will mark it as full if it lands in (1).
-            # get the ones that aren't full after the move (0).
-            # since we reversed the set method with abs, the last height index is used for the first column.
-            # we need to reverse it as well in order to work correctly.
-            if mask & (1 << self.__height_indexes[11 - column]) == 0:
-                moves.append(column)
-
-        # return our list of move.
-        return moves
 
     def __str__(self):
 
+        # format our encoded board for X as a 144 bits string.
+        format_to_full_bits_X = format(int(bin(self.__encoded_boards[0]), 2),
+                                       '{fill}{width}b'.format(width=144, fill=0))
+
         # format our encoded board for O as a 144 bits string.
-        format_to_full_bits = format(int(bin(self.__encoded_boards[0]), 2), '{fill}{width}b'.format(width=144, fill=0))
+        format_to_full_bits_O = format(int(bin(self.__encoded_boards[1]), 2),
+                                       '{fill}{width}b'.format(width=144, fill=0))
 
         # get every 12 character so that instead of setting players in columns we can set them in rows.
-        return ''.join([format_to_full_bits[i::12] for i in range(12)])
+        return ''.join([format_to_full_bits_X[i::12] for i in range(12)])
