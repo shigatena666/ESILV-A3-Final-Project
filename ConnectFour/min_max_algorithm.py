@@ -5,13 +5,16 @@ from bitboard import *
 
 class MinMaxAlgorithm:
 
+    def __init__(self):
+        self.__moves_count = 0
+
     def alpha_beta_search(self, board_state: BitBoard):
 
         # let's see what moves return the best result.
         action = None
 
         # let's see if we should start by minimizing or maximizing.
-        should_minimize = board_state.current_player() == board_state.get_initial_player()
+        should_minimize = board_state.get_current_player() == board_state.get_initial_player()
 
         # initialize our value to +/-infinity depending on should we maximize or minimize.
         value = -math.inf if should_minimize else math.inf
@@ -25,7 +28,7 @@ class MinMaxAlgorithm:
             # This will either result in a win for the AI or a draw.
 
             if should_minimize:
-                action_score = self.min_value(board_state.result(allowed_action),
+                action_score = self.min_value(board_state.set(allowed_action),
                                               -math.inf,
                                               math.inf)
 
@@ -35,7 +38,7 @@ class MinMaxAlgorithm:
                     action = allowed_action
 
             else:
-                action_score = self.max_value(board_state.result(allowed_action),
+                action_score = self.max_value(board_state.set(allowed_action),
                                               -math.inf,
                                               math.inf)
 
@@ -43,6 +46,13 @@ class MinMaxAlgorithm:
                 if action_score < value:
                     value = action_score
                     action = allowed_action
+
+        # before returning the action, make sure to unset all the moves we've done.
+        for _ in range(0, self.__moves_count):
+            board_state.unset()
+
+        # reset the counter in case there is a next execution of alpha_beta_search.
+        self.__moves_count = 0
 
         # return the best move accordingly for maximizing or minimizing.
         return action
@@ -59,8 +69,11 @@ class MinMaxAlgorithm:
         # iterate through all possible actions on the board.
         for allowed_action in board_state.get_allowed_actions():
 
+            # add one to our counter of moves.
+            self.__moves_count += 1
+
             # get the maximum between the previous value and the minimized result of the board.
-            value = max(value, self.min_value(board_state.result(allowed_action),
+            value = max(value, self.min_value(board_state.set(allowed_action),
                                               alpha,
                                               beta))
 
@@ -75,4 +88,31 @@ class MinMaxAlgorithm:
         return value
 
     def min_value(self, board_state: BitBoard, alpha, beta):
-        pass
+
+        # check if someone has won in case the game has ended.
+        if board_state.has_game_ended():
+            return board_state.get_winner_as_int()
+
+        # initialize our value to +infinity.
+        value = math.inf
+
+        # iterate through all possible actions on the board.
+        for allowed_action in board_state.get_allowed_actions():
+
+            # add one to our counter of moves.
+            self.__moves_count += 1
+
+            # get the minimum between the previous value and the maximized result of the board.
+            value = min(value, self.max_value(board_state.set(allowed_action),
+                                              alpha,
+                                              beta))
+
+            # in case our value is lesser than alpha, return it.
+            if value < alpha:
+                return value
+
+            # assign our alpha as in the pseudocode.
+            beta = min(beta, value)
+
+        # return that value
+        return value

@@ -22,7 +22,7 @@ class BitBoard:
         # any copy of X and O board, only making moves and undo them.
         self.__moves = []
 
-    def current_player(self):
+    def get_current_player(self):
 
         # return 0 if self.__counter % 2 == 0 else 1
         # should be slightly faster than the version above. Using the least significant bit (LSB) [rightmost bit] to get
@@ -32,6 +32,11 @@ class BitBoard:
         #           2 = 0010 : LSB is 0 => even
         #           3 = 0011 : LSB is 1 => even
         return 0 if self.__counter & 1 == 0 else 1
+
+    def get_previous_player(self):
+
+        # return the opposite of current player.
+        return 0 if self.get_current_player() == 1 else 1
 
     def get_initial_player(self):
         return self.__first_player
@@ -75,13 +80,15 @@ class BitBoard:
         self.__height_indexes[column_index] += 1
 
         # set the board depending on the current player.
-        self.__encoded_boards[self.current_player()] ^= move
+        self.__encoded_boards[self.get_current_player()] ^= move
 
         # store the column where we made our move inside our list.
         self.__moves.append(column_index)
 
         # increment our counter so that the next player will be playing.
         self.__counter += 1
+
+        return self
 
     def unset(self):
 
@@ -98,7 +105,7 @@ class BitBoard:
         move = 1 << self.__height_indexes[last_played_column]
 
         # set the board depending on the current player.
-        self.__encoded_boards[self.current_player()] ^= move
+        self.__encoded_boards[self.get_current_player()] ^= move
 
     def get_winner(self):
 

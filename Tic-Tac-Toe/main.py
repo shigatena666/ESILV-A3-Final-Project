@@ -1,6 +1,6 @@
-from min_max_algorithm import MinMaxAlgorithm
-from board import Board
-from action import Action
+from min_max_algorithm import *
+from board import *
+from action import *
 import utilities
 
 
