@@ -58,6 +58,7 @@ class MinMaxAlgorithm:
 
         # iterate through all possible actions on the board.
         for allowed_action in board_state.get_allowed_actions():
+            board_state.set(allowed_action)
 
             # get the maximum between the previous value and the minimized result of the board.
             value = max(value, self.min_value(board_state.result(allowed_action),
