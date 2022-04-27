@@ -18,8 +18,17 @@ def new_game_state(board_state, action_move):
 
 if __name__ == "__main__":
 
+<<<<<<< Updated upstream
     # instantiate our board and algorithm.
     board = BitBoard()
+=======
+    
+    
+    # instantiate our board and algorithm.
+    rows = 6
+    columns = 12
+    board = Board()
+>>>>>>> Stashed changes
     min_max_algo = MinMaxAlgorithm()
 
 
@@ -47,13 +56,18 @@ if __name__ == "__main__":
                 break
 
         # ask the user to play and set it inside the board.
+<<<<<<< Updated upstream
         coordonates = input("x:")
         coordonates = int(coordonates)
+=======
+        coordonates = int(input("x: "))
+>>>>>>> Stashed changes
 
         # check if user provided right input types.
-        while not utilities.is_int(coordonates[0]) and not utilities.is_int(coordonates[1]):
+        while not coordonates < 12 and coordonates > 0:
 
             # re-actualize user inputs.
+<<<<<<< Updated upstream
             print("[Error]: Please provided a column.")
             coordonates = input("x:")
             coordonates = int(coordonates)
@@ -67,6 +81,20 @@ if __name__ == "__main__":
             print("[Error]: Please provided a non-full column.")
             coordonates = input("x:")
             coordonates = int(coordonates)
+=======
+            print("[Error]: Please provided a valid number")
+            coordonates = int(input("x: "))
+            
+
+        
+
+        # check if user provided right input coordonates.
+        while board.get_heights()[coordonates] >= 6:
+
+            # re-actualize user inputs.
+            print("[Error]: Please provided two coordonates that are not already used (0-2).")
+            coordonates = int(input("x: "))
+>>>>>>> Stashed changes
 
         # actualize the board state with the action.
         board = new_game_state(board, coordonates)
@@ -89,6 +117,7 @@ if __name__ == "__main__":
             if board.has_game_ended():
                 print(board.get_winner(), "won")
                 break
+<<<<<<< Updated upstream
 """
 
 if __name__ == '__main__':
@@ -115,3 +144,7 @@ if __name__ == '__main__':
 
     print(bitboard.get_allowed_actions())
     print(bitboard.get_winner())
+=======
+            
+    
+>>>>>>> Stashed changes
