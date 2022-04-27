@@ -1,3 +1,4 @@
+from copy import deepcopy
 class BitBoard:
 
     def __init__(self, first_player='X'):
@@ -22,7 +23,7 @@ class BitBoard:
         # any copy of X and O board, only making moves and undo them.
         self.__moves = []
 
-    def current_player(self):
+    def get_current_player(self):
 
         # return 0 if self.__counter % 2 == 0 else 1
         # should be slightly faster than the version above. Using the least significant bit (LSB) [rightmost bit] to get
@@ -33,6 +34,11 @@ class BitBoard:
         #           3 = 0011 : LSB is 1 => even
         return 0 if self.__counter & 1 == 0 else 1
 
+    def get_previous_player(self):
+
+        # return the opposite of current player.
+        return 0 if self.get_current_player() == 1 else 1
+
     def get_initial_player(self):
         return self.__first_player
 
@@ -40,6 +46,14 @@ class BitBoard:
 
         # get the boards for X and O.
         return self.__encoded_boards
+    
+    def result(self, action):
+        
+        #Returns a new board with the action done without changing the current board
+        self.set(action)
+        new_board = deepcopy(self)
+        self.unset()
+        return new_board
 
     def get_allowed_actions(self):
 
@@ -75,13 +89,15 @@ class BitBoard:
         self.__height_indexes[column_index] += 1
 
         # set the board depending on the current player.
-        self.__encoded_boards[self.current_player()] ^= move
+        self.__encoded_boards[self.get_current_player()] ^= move
 
         # store the column where we made our move inside our list.
         self.__moves.append(column_index)
 
         # increment our counter so that the next player will be playing.
         self.__counter += 1
+
+        return self
 
     def unset(self):
 
@@ -98,7 +114,7 @@ class BitBoard:
         move = 1 << self.__height_indexes[last_played_column]
 
         # set the board depending on the current player.
-        self.__encoded_boards[self.current_player()] ^= move
+        self.__encoded_boards[self.get_current_player()] ^= move
 
     def get_winner(self):
 
@@ -168,5 +184,21 @@ class BitBoard:
         format_to_full_bits_O = format(int(bin(self.__encoded_boards[1]), 2),
                                        '{fill}{width}b'.format(width=144, fill=0))
 
+        # prepare our string as a list.
+        format_to_board = ''
+
+        for i in range(0, len(format_to_full_bits_X)):
+
+            # if X's bit is 0 and O's bit is 1 then we put the character for O.
+            if format_to_full_bits_X[i] == '0' and format_to_full_bits_O[i] == '1':
+                format_to_board += 'O'
+
+            # as opposite, put X.
+            elif format_to_full_bits_X[i] == '1' and format_to_full_bits_O[i] == '0':
+                format_to_board += 'X'
+
+            else:
+                format_to_board += '.'
+
         # get every 12 character so that instead of setting players in columns we can set them in rows.
-        return ''.join([format_to_full_bits_X[i::12] for i in range(12)])
+        return ''.join([format_to_board[i::12] for i in range(12)])

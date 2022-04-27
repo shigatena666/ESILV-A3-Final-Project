@@ -1,17 +1,16 @@
 import math
-
 from bitboard import *
 
 
 class MinMaxAlgorithm:
 
-    def alpha_beta_search(self, board_state: BitBoard):
+    def alpha_beta_search(self, board_state):
 
         # let's see what moves return the best result.
         action = None
 
         # let's see if we should start by minimizing or maximizing.
-        should_minimize = board_state.current_player() == board_state.get_initial_player()
+        should_minimize = board_state.get_current_player() == board_state.get_initial_player()
 
         # initialize our value to +/-infinity depending on should we maximize or minimize.
         value = -math.inf if should_minimize else math.inf
@@ -47,7 +46,7 @@ class MinMaxAlgorithm:
         # return the best move accordingly for maximizing or minimizing.
         return action
 
-    def max_value(self, board_state: BitBoard, alpha, beta):
+    def max_value(self, board_state, alpha, beta):
 
         # check if someone has won in case the game has ended.
         if board_state.has_game_ended():
@@ -58,7 +57,6 @@ class MinMaxAlgorithm:
 
         # iterate through all possible actions on the board.
         for allowed_action in board_state.get_allowed_actions():
-            board_state.set(allowed_action)
 
             # get the maximum between the previous value and the minimized result of the board.
             value = max(value, self.min_value(board_state.result(allowed_action),
@@ -75,5 +73,29 @@ class MinMaxAlgorithm:
         # return that value
         return value
 
-    def min_value(self, board_state: BitBoard, alpha, beta):
-        pass
+    def min_value(self, board_state, alpha, beta):
+
+        # check if someone has won in case the game has ended.
+        if board_state.has_game_ended():
+            return board_state.get_winner_as_int()
+
+        # initialize our value to +infinity.
+        value = math.inf
+
+        # iterate through all possible actions on the board.
+        for allowed_action in board_state.get_allowed_actions():
+
+            # get the minimum between the previous value and the maximized result of the board.
+            value = min(value, self.max_value(board_state.result(allowed_action),
+                                              alpha,
+                                              beta))
+
+            # in case our value is lesser than alpha, return it.
+            if value < alpha:
+                return value
+
+            # assign our alpha as in the pseudocode.
+            beta = min(beta, value)
+
+        # return that value
+        return value
