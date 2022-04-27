@@ -21,6 +21,24 @@ if __name__ == "__main__":
 
     # instantiate our board and algorithm.
     board = Board()
+    #board = board.result(0)
+    board = board.result(0)
+    board = board.result(11)
+    board = board.result(0)
+    board = board.result(11)
+    board = board.result(0)
+    board = board.result(11)
+    board = board.result(1)
+    board = board.result(11)
+
+    
+    
+    print(board)
+    print(board.get_winner())
+    
+    array = board.get_array()
+
+    """
     min_max_algo = MinMaxAlgorithm()
 
     # get who should play first, IA or player ?
@@ -91,3 +109,4 @@ if __name__ == "__main__":
             if board.has_game_ended():
                 print(board.get_winner(), "won")
                 break
+"""
