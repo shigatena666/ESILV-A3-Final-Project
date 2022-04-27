@@ -4,7 +4,7 @@ from action import *
 import utilities
 
 
-def new_game_state(board_state: Board, action_move: Action):
+def new_game_state(board_state: Board, action_move):
     # warning, this will not directly modify the board_state.
 
     # update our board with that action.
@@ -22,21 +22,31 @@ if __name__ == "__main__":
     # instantiate our board and algorithm.
     board = Board()
     #board = board.result(0)
-    board = board.result(0)
+    
+    
+    i = 0
+    board = board.result(i+0)
+    board = board.result(i+1)
+    board = board.result(i+1)
+    board = board.result(i+2)
+    board = board.result(i+2)
+    board = board.result(i+3)
+    board = board.result(i+2)
+    board = board.result(i+3)
     board = board.result(11)
-    board = board.result(0)
-    board = board.result(11)
-    board = board.result(0)
-    board = board.result(11)
-    board = board.result(1)
-    board = board.result(11)
+    board = board.result(i+3)
+    board = board.result(i+3)
+    #board = board.result(11)
+    
+    
+    
+    
 
     
     
     print(board)
     print(board.get_winner())
-    
-    array = board.get_array()
+
 
     """
     min_max_algo = MinMaxAlgorithm()

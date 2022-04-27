@@ -135,20 +135,25 @@ class Board:
                 # if the length is 1 and the first character isn't a space then it means someone won.
                 if len(transpose_set) == 1 and ' ' not in transpose_set:
                     return transpose[line][i]
-        """
+        
         # check for diagonals and create our sets.
-        descending_diagonal_set = set([self.__array[i][i] for i in range(len(self.__array))])
-        ascending_diagonal_set = set([self.__array[i][len(self.__array[i]) - 1 - i]
-                                      for i in range(0, len(self.__array))])
-
-        # return the player in the diagonal that has won if there is any.
-        if len(descending_diagonal_set) == 1 and ' ' not in descending_diagonal_set:
-            return 'X' if self.__array[0][0] == 'X' else 'O'
-
-        # same thing.
-        if len(ascending_diagonal_set) == 1 and ' ' not in ascending_diagonal_set:
-            return 'X' if self.__array[0][2] == 'X' else 'O'
-        """
+        for column in range(0,self.__columns - 3):
+            for line in range (0, self.__rows - 3):
+                diagonal_set = set([self.__array[i+line][i+column] for i in range (0,4)])
+                
+                # if the length is 1 and the first character isn't a space then it means someone won.
+                if len(diagonal_set) == 1 and ' ' not in diagonal_set:
+                    return self.__array[line][column]
+        
+        for column in range(3,self.__columns):
+            for line in range (0, self.__rows - 3):
+                diagonal_set = set([self.__array[i+line][column - i] for i in range (0,4)])
+                
+                # if the length is 1 and the first character isn't a space then it means someone won.
+                if len(diagonal_set) == 1 and ' ' not in diagonal_set:
+                    return self.__array[line][column]
+        
+        
         # check for equality.
         return None
 
