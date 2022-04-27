@@ -1,5 +1,5 @@
 import math
-from bitboard import *
+from board import *
 
 
 class MinMaxAlgorithm:

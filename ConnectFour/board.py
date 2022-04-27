@@ -1,10 +1,9 @@
 from copy import deepcopy
-from action import Action
+
 
 import numpy as np
 
 import utilities
-
 
 class Board:
 
