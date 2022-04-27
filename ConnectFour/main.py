@@ -8,7 +8,7 @@ def new_game_state(board_state, action_move):
     # warning, this will not directly modify the board_state.
 
     # update our board with that action.
-    board_state = board_state.set(action_move)
+    board_state = board_state.result(action_move)
 
     # re-show the game after the play.
     print(board_state)
