@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import deepcopy, copy
 from scipy.signal import convolve2d
 
 import numpy as np
@@ -37,7 +37,7 @@ class Board:
             self.__array = deepcopy(board_state.get_current_game_state())
             self.__rows = board_state.get_rows()
             self.__columns = board_state.get_columns()
-            self.__heights = board_state.get_heights()
+            self.__heights = copy(board_state.get_heights())
             self.__counter = board_state.get_counter()
 
         else:

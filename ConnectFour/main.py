@@ -21,14 +21,8 @@ if __name__ == "__main__":
     board = Board()
 
     min_max_algo = MinMaxAlgorithm()
-    # action = min_max_algo.alpha_beta_search(board)
-    board = board.result(0)
-    board = board.result(0)
-    board = board.result(0)
-    board = board.result(0)
-    board = board.result(0)
-    board = board.result(0)
-
+    column = min_max_algo.alpha_beta_search(board)
+    board = board.result(column)
 
     print(board)
     print(board.get_winner())
