@@ -20,6 +20,69 @@ if __name__ == "__main__":
     # instantiate our board and algorithm.
     board = Board()
 
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(2)
+    board = board.result(1)
+    board = board.result(1)
+    board = board.result(1)
+    board = board.result(1)
+    board = board.result(1)
+    board = board.result(1)
+    board = board.result(2)
+    board = board.result(2)
+    board = board.result(2)
+    board = board.result(2)
+    board = board.result(2)
+    board = board.result(3)
+    board = board.result(3)
+    board = board.result(3)
+    board = board.result(3)
+    board = board.result(3)
+    board = board.result(3)
+    board = board.result(4)
+    board = board.result(4)
+    board = board.result(4)
+    board = board.result(4)
+    board = board.result(4)
+    board = board.result(4)
+    board = board.result(6)
+    board = board.result(5)
+    board = board.result(5)
+    board = board.result(5)
+    board = board.result(5)
+    board = board.result(5)
+    board = board.result(5)
+    board = board.result(6)
+    board = board.result(6)
+    board = board.result(6)
+    board = board.result(6)
+    board = board.result(6)
+    board = board.result(7)
+    board = board.result(7)
+    board = board.result(7)
+    board = board.result(7)
+    board = board.result(7)
+    board = board.result(7)
+    board = board.result(8)
+    board = board.result(8)
+    board = board.result(8)
+    board = board.result(8)
+    board = board.result(8)
+
+
+
+
+
+
+
+
+    print(board)
+
     min_max_algo = MinMaxAlgorithm()
     column = min_max_algo.alpha_beta_search(board)
     board = board.result(column)
@@ -27,6 +90,7 @@ if __name__ == "__main__":
     print(board)
     print(board.get_winner())
     print(board.get_allowed_actions())
+    print(board.has_game_ended())
 
 
     """
