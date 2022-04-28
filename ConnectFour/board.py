@@ -1,48 +1,68 @@
 from copy import deepcopy
-from action import Action
+from scipy.signal import convolve2d
 
 import numpy as np
 
 import utilities
 
+# define our consts.
+
+# these are our winning conditions.
+HORIZONTAL_KERNEL = np.array([[1, 1, 1, 1]])
+VERTICAL_KERNEL = np.transpose(HORIZONTAL_KERNEL)
+ASCENDING_DIAGONAL_KERNEL = np.eye(4, dtype=np.uint8)
+DESCENDING_DIAGONAL_KERNEL = np.fliplr(ASCENDING_DIAGONAL_KERNEL)
+
+# this part will be used for winning detection.
+# we will use convolution matrixes, which will result in the sum of the surrounding el
+# multiplied by the element at the same position (index) in the kernel.
+# the kernels will be what we defined below, and we will apply that on our 2D board.
+# if any 4 is detected inside the convolution matrix, this means we have a winner.
+DETECTION_KERNELS = [HORIZONTAL_KERNEL,
+                     VERTICAL_KERNEL,
+                     ASCENDING_DIAGONAL_KERNEL,
+                     DESCENDING_DIAGONAL_KERNEL]
+
 
 class Board:
 
     # TODO: Replace O and X by consts.
-    def __init__(self, board_state=None,first_player='X', rows=6, columns=12):
+    def __init__(self, board_state=None, first_player='X', rows=6, columns=12):
 
         # check if a board has been provided for copy.
         if board_state is not None:
+
+            # set our attributes for the copy.
             self.__first_player = board_state.get_initial_player()
             self.__array = deepcopy(board_state.get_current_game_state())
             self.__rows = board_state.get_rows()
             self.__columns = board_state.get_columns()
             self.__heights = board_state.get_heights()
             self.__counter = board_state.get_counter()
+
         else:
+
             # set the first player in the board.
             self.__first_player = first_player
-            
-            self.__counter = 0
-            self.__heights = [0,0,0,0,0,0,0,0,0,0,0,0]
 
-       
+            self.__counter = 0
+            self.__heights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
             # set how many rows and columns for later computation.
             self.__rows = rows
             self.__columns = columns
-    
+
             # create an empty board of rows * columns.
-            self.__array = deepcopy(utilities.initial_state(self.__columns, self.__rows))
-        
-        self.__second_player='O' if self.__first_player == 'X' else 'X'
-        
-    
+            self.__array = deepcopy(utilities.initial_state(self.__rows, self.__columns))
+
+        self.__second_player = 'O' if self.__first_player == 'X' else 'X'
+
     def get_counter(self):
         return self.__counter
+
     def get_heights(self):
         return self.__heights
-    
+
     def get_array(self):
         return self.__array
 
@@ -67,9 +87,8 @@ class Board:
         return self.__columns
 
     def current_player(self):
-        
-        
-        return self.__first_player if self.__counter%2==0 else self.__second_player
+
+        return self.__first_player if self.__counter % 2 == 0 else self.__second_player
 
     def get_allowed_actions(self):
 
@@ -77,8 +96,10 @@ class Board:
         actions = []
 
         # iterate through all elements.
-        for column in range (0, self.__columns):
-            if self.__heights[column] != self.__rows:
+        for column in range(0, self.__columns):
+
+            # check if we haven't gone through the maximum amount of element per column (which is our rows)
+            if self.__heights[column] < self.__rows:
                 actions.append(column)
 
         # return our array of actions.
@@ -87,17 +108,17 @@ class Board:
     def set(self, column):
 
         # set the slot to the player who needs to play.
-        self.__array[self.__rows - 1- self.__heights[column]][column] = self.current_player()
-        self.__heights[column]+=1
-        self.__counter = self.__counter + 1
+        self.__array[self.__rows - 1 - self.__heights[column]][column] = self.current_player()
+        self.__heights[column] += 1
+        self.__counter += 1
 
     def result(self, column):
-        
+
         if self.__heights[column] == 6:
             raise Exception('The slot is already occupied, this should never happen.')
-        
+
         # create a deep-copy of the board.
-        
+
         new_board = Board(self)
 
         # set the actions and return the new board.
@@ -108,53 +129,31 @@ class Board:
 
     def get_winner(self):
 
-        # let's look into the lines.
-        
-        for line in range(self.__rows):
-            for i in range (0, self.__columns -3):
-                
-                # create a set for the line.
-                line_set = set(self.__array[line][i:i+4])
-                
-    
-                # if the length is 1 and the first character isn't a space then it means someone won.
-                if len(line_set) == 1 and ' ' not in line_set:
-                    return self.__array[line][i]
+        # initialize our player matrixes.
+        x_matrix = []
+        o_matrix = []
 
-        # let's look into the columns, use the property of a matrix to make it easier.
-        transpose = np.transpose(self.__array)
-        
-        
-        # iterate through the columns (which are now lines).
-        for line in range(self.__columns):
-            for i in range (0, self.__rows -3):
-                # create a set for the transpose.
-                transpose_set = set(transpose[line][i:i+4])
-                
-                
-                # if the length is 1 and the first character isn't a space then it means someone won.
-                if len(transpose_set) == 1 and ' ' not in transpose_set:
-                    return transpose[line][i]
-        
-        # check for diagonals and create our sets.
-        for column in range(0,self.__columns - 3):
-            for line in range (0, self.__rows - 3):
-                diagonal_set = set([self.__array[i+line][i+column] for i in range (0,4)])
-                
-                # if the length is 1 and the first character isn't a space then it means someone won.
-                if len(diagonal_set) == 1 and ' ' not in diagonal_set:
-                    return self.__array[line][column]
-        
-        for column in range(3,self.__columns):
-            for line in range (0, self.__rows - 3):
-                diagonal_set = set([self.__array[i+line][column - i] for i in range (0,4)])
-                
-                # if the length is 1 and the first character isn't a space then it means someone won.
-                if len(diagonal_set) == 1 and ' ' not in diagonal_set:
-                    return self.__array[line][column]
-        
-        
-        # check for equality.
+        # fill the right 2D matrix depending on whether it's an X or O.
+        for row in self.__array:
+
+            # fill with one more dimension.
+            x_matrix.append([])
+            o_matrix.append([])
+
+            # iterate through our elements in the row.
+            for element in row:
+                x_matrix[len(x_matrix) - 1].append(1 if element == 'X' else 0)
+                o_matrix[len(o_matrix) - 1].append(1 if element == 'O' else 0)
+
+        # iterate through our kernels.
+        for kernel in DETECTION_KERNELS:
+
+            # check in our 2D boards if any element of the convolution matrix is equal to 4 (our winning condition).
+            if (convolve2d(x_matrix, kernel, mode="valid") == 4).any():
+                return 'X'
+            elif (convolve2d(o_matrix, kernel, mode="valid") == 4).any():
+                return 'O'
+
         return None
 
     def get_winner_as_int(self):

@@ -1,7 +1,5 @@
 from min_max_algorithm import *
 from board import *
-from action import *
-import utilities
 
 
 def new_game_state(board_state: Board, action_move):
@@ -21,31 +19,20 @@ if __name__ == "__main__":
 
     # instantiate our board and algorithm.
     board = Board()
-    #board = board.result(0)
-    
-    
-    i = 0
-    board = board.result(i+0)
-    board = board.result(i+1)
-    board = board.result(i+1)
-    board = board.result(i+2)
-    board = board.result(i+2)
-    board = board.result(i+3)
-    board = board.result(i+2)
-    board = board.result(i+3)
-    board = board.result(11)
-    board = board.result(i+3)
-    board = board.result(i+3)
-    #board = board.result(11)
-    
-    
-    
-    
 
-    
-    
+    min_max_algo = MinMaxAlgorithm()
+    # action = min_max_algo.alpha_beta_search(board)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+    board = board.result(0)
+
+
     print(board)
     print(board.get_winner())
+    print(board.get_allowed_actions())
 
 
     """
