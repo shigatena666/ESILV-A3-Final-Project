@@ -16,10 +16,12 @@ def new_game_state(board_state: Board, action_move):
 
 
 if __name__ == "__main__":
+    
+    
 
     # instantiate our board and algorithm.
     board = Board()
-
+    
     board = board.result(0)
     board = board.result(0)
     board = board.result(0)
@@ -94,7 +96,14 @@ if __name__ == "__main__":
 
 
     """
+       
+    # instantiate our board and algorithm.
+    rows = 6
+    columns = 12
+    board = Board()
+    print(board.has_game_ended())
     min_max_algo = MinMaxAlgorithm()
+
 
     # get who should play first, IA or player ?
     ia_plays_first = bool(int(input('IA should play first ? (Answer 1 if yes, 0 otherwise)')))
@@ -120,31 +129,30 @@ if __name__ == "__main__":
                 break
 
         # ask the user to play and set it inside the board.
-        user_input = input("x, y: ")
-        coordonates = user_input.split(',')
+
+        coordonates = int(input("x: "))
+
 
         # check if user provided right input types.
-        while not utilities.is_int(coordonates[0]) and not utilities.is_int(coordonates[1]):
+        while not coordonates < 12 and coordonates >= 0:
 
             # re-actualize user inputs.
-            print("[Error]: Please provided two coordonates (0-2).")
-            user_input = input("x, y: ")
-            coordonates = user_input.split(',')
 
-        # create the action the user provided.
-        action = Action(int(coordonates[0]), int(coordonates[1]))
+            print("[Error]: Please provide a valid number.")
+            coordonates = int(input("x: "))
+
 
         # check if user provided right input coordonates.
-        while board.get_current_game_state()[action.get_x()][action.get_y()] != ' ':
+        while coordonates not in board.get_allowed_actions():
 
             # re-actualize user inputs.
-            print("[Error]: Please provided two coordonates that are not already used (0-2).")
-            user_input = input("x, y: ")
-            coordonates = user_input.split(',')
-            action = Action(int(coordonates[0]), int(coordonates[1]))
+            print("[Error]: Please provided a non-full column.")
+            coordonates = input("x:")
+            coordonates = int(coordonates)
+
 
         # actualize the board state with the action.
-        board = new_game_state(board, action)
+        board = new_game_state(board, coordonates)
 
         # if true, it means there is a winner.
         if board.has_game_ended():
@@ -164,4 +172,4 @@ if __name__ == "__main__":
             if board.has_game_ended():
                 print(board.get_winner(), "won")
                 break
-"""
+            """
