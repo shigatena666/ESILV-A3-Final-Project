@@ -72,9 +72,8 @@ if __name__ == "__main__":
     board = board.result(7)
     board = board.result(8)
     board = board.result(8)
-    board = board.result(8)
-    board = board.result(8)
-    board = board.result(8)
+
+
 
 
 
