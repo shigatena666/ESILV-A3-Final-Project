@@ -53,7 +53,7 @@ class Board:
             self.__columns = columns
 
             # create an empty board of rows * columns.
-            self.__array = deepcopy(utilities.initial_state(self.__rows, self.__columns))
+            self.__array = deepcopy(utilities.initial_state(self.__columns, self.__rows))
 
         self.__second_player = 'O' if self.__first_player == 'X' else 'X'
 
@@ -156,29 +156,31 @@ class Board:
 
         return None
 
-    def get_winner_as_int(self):
+    #who_am_i represents the player we want to win, so that we decide wether the score should be positive or negative
+    def get_winner_as_int(self, who_won, who_am_i):
 
         # get the winner from the board.
-        who_won = self.get_winner()
+        #who_won = self.get_winner()
 
         # if X won, return 1
-        if who_won == 'X':
+        if who_won == who_am_i:
             return 1
 
-        # if O won, return -1.
-        elif who_won == 'O':
-            return -1
 
         # return 0 if it's a draw.
         else:
-            return 0
+            return -1
 
     def has_game_ended(self):
+        
+        # first check for a winner:
+        winner = self.get_winner()
+        if (winner is not None):
+            return winner
 
         # let's check if the board is full or if there is a winner.
-        if (self.__array != utilities.initial_state(self.__rows,
-                                                    self.__columns)).all() or self.get_winner() is not None:
-            return True
+        if ' ' not in set(self.__array[0]):
+            return 'Draw'
 
         # else return False.
         return False
