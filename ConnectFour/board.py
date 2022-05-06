@@ -39,6 +39,7 @@ class Board:
             self.__columns = board_state.get_columns()
             self.__heights = copy(board_state.get_heights())
             self.__counter = board_state.get_counter()
+            self.__winner = board_state.get_winner()
 
         else:
 
@@ -55,6 +56,9 @@ class Board:
             # create an empty board of rows * columns.
             self.__array = deepcopy(utilities.initial_state(self.__rows, self.__columns))
 
+            # initialize our winner. This will cache it as it takes some time to process.
+            self.__winner = None
+
         self.__ia_char = 'O' if self.__player_char == 'X' else 'X'
 
     def get_counter(self):
@@ -65,6 +69,9 @@ class Board:
 
     def get_array(self):
         return self.__array
+
+    def get_winner(self):
+        return self.__winner
 
     def get_player_char(self):
 
@@ -110,7 +117,7 @@ class Board:
         # return our array of actions.
         return np.array(actions)
 
-    def set(self, column):
+    def __set(self, column):
 
         # set the slot to the player who needs to play.
         self.__array[self.__rows - 1 - self.__heights[column]][column] = self.get_current_player_char()
@@ -127,12 +134,12 @@ class Board:
         new_board = Board(self.__player_char, self.__rows, self.__columns, self)
 
         # set the actions and return the new board.
-        new_board.set(column)
+        new_board.__set(column)
 
         # return the new board.
         return new_board
 
-    def get_winner(self):
+    def __find_winner(self):
 
         # initialize our player matrixes.
         x_matrix = []
@@ -163,25 +170,25 @@ class Board:
 
     def get_winner_as_int(self):
 
-        # get the winner from the board.
-        who_won = self.get_winner()
-
-        # if X won, return 1
-        if who_won == self.get_player_char():
+        # retrieve the cached winner, if X won, return 1.
+        if self.__winner == self.get_player_char():
             return 1
 
-        # if O won, return -1
-        elif who_won == self.get_ia_char():
+        # if O won, return -1.
+        elif self.__winner == self.get_ia_char():
             return -1
 
-        # else it's a draw, return 0
+        # else it's a draw, return 0.
         else:
             return 0
 
     def has_game_ended(self):
 
         # first check for a winner:
-        winner = self.get_winner()
+        winner = self.__find_winner()
+
+        # cache the winner to prevent performances loss.
+        self.__winner = winner
 
         # let's check if the board is full or if there is a winner.
         if winner is not None or (self.__array != utilities.initial_state(self.__rows, self.__columns)).all():
