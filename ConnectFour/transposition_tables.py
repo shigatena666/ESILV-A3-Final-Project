@@ -1,7 +1,7 @@
 from board import Board
 
 
-class TranspositionTable:
+class TranspositionTables:
 
     def __init__(self):
         self.__cache = {}

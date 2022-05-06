@@ -1,6 +1,6 @@
 import math
 
-from transposition_tables import *
+from board import *
 
 
 class MinMaxAlgorithm:
