@@ -71,6 +71,11 @@ class Board:
         # get the char of the first player.
         return self.__player_char
 
+    def get_ia_char(self):
+
+        # get the char of the IA.
+        return self.__ia_char
+
     def get_current_game_state(self):
 
         # get the array of the game.
@@ -89,10 +94,6 @@ class Board:
     def get_current_player_char(self):
 
         return self.__player_char if self.__counter % 2 == 0 else self.__ia_char
-
-    def get_ia_char(self):
-
-        return self.__ia_char
 
     def get_allowed_actions(self):
 

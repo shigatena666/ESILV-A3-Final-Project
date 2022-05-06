@@ -20,7 +20,7 @@ def new_game_state(board_state: Board, action_move: Action):
 if __name__ == "__main__":
 
     # instantiate our board and algorithm.
-    board = Board()
+    board = Board('O')
     min_max_algo = MinMaxAlgorithm()
 
     # get who should play first, IA or player ?

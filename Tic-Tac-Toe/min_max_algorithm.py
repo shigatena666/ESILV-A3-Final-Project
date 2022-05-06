@@ -10,7 +10,7 @@ class MinMaxAlgorithm:
         action = None
 
         # let's see if we should start by minimizing or maximizing.
-        should_minimize = board_state.current_player() == board_state.get_initial_player()
+        should_minimize = board_state.get_current_player_char() == board_state.get_player_char()
 
         # initialize our value to +/-infinity depending on should we maximize or minimize.
         value = -math.inf if should_minimize else math.inf
