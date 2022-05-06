@@ -1,6 +1,6 @@
 import math
 
-from board import *
+from transposition_tables import *
 
 
 class MinMaxAlgorithm:
@@ -29,8 +29,11 @@ class MinMaxAlgorithm:
         # iterate through all possible actions on the board.
         for allowed_action in allowed_actions:
 
+            # get the board result.
+            board_result = board_state.result(allowed_action)
+
             # get the maximum between the previous value and the minimized result of the board.
-            child_score = self.alpha_beta_search(board_state.result(allowed_action), depth - 1, alpha, beta)[1]
+            child_score = self.alpha_beta_search(board_result, depth - 1, alpha, beta)[1]
 
             # Set the new best value in case we have a better score
             if (child_score > value and should_maximize) or (child_score < value and not should_maximize):
