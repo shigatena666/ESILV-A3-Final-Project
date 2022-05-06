@@ -26,7 +26,6 @@ DETECTION_KERNELS = [HORIZONTAL_KERNEL,
 
 class Board:
 
-    # TODO: Replace O and X by consts.
     def __init__(self, first_player='X', rows=6, columns=12, board_state=None):
 
         # check if a board has been provided for copy.
@@ -191,7 +190,9 @@ class Board:
         self.__winner = winner
 
         # let's check if the board is full or if there is a winner.
-        if winner is not None or (self.__array != utilities.initial_state(self.__rows, self.__columns)).all():
+        if winner is not None \
+                or (self.__array != utilities.initial_state(self.__rows, self.__columns)).all()\
+                or self.__counter >= 42:
             return True
 
         # else return False.
