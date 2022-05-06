@@ -57,7 +57,8 @@ if __name__ == "__main__":
         coordonates = int(input("x: "))
 
         # check if user provided right input types.
-        while not (0 <= coordonates < columns):
+        while not (1 <= coordonates <= columns):
+
             # re-actualize user inputs.
             print("[Error]: Please provide a valid number.")
             coordonates = int(input("x: "))
@@ -67,11 +68,10 @@ if __name__ == "__main__":
 
             # re-actualize user inputs.
             print("[Error]: Please provided a non-full column.")
-            coordonates = input("x:")
-            coordonates = int(coordonates)
+            coordonates = int(input("x:"))
 
-        # actualize the board state with the action.
-        board = new_game_state(board, coordonates)
+        # actualize the board state with the action in the column. -1 because player plays with 1-12.
+        board = new_game_state(board, coordonates - 1)
 
         # if true, it means there is a winner.
         if board.has_game_ended():
