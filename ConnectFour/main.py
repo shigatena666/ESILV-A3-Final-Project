@@ -1,4 +1,5 @@
 from min_max_algorithm import *
+import timeit
 
 
 def new_game_state(board_state, action_move):
@@ -36,8 +37,17 @@ if __name__ == "__main__":
         # if IA plays first, put its first play onto the board.
         if ia_plays_first:
 
+            # retrieve the start time.
+            start = timeit.default_timer()
+
             # get the best move out of the board.
             alpha_beta_result = min_max_algo.alpha_beta_search(board, depth)
+
+            # retrieve the finished action time.
+            stop = timeit.default_timer()
+
+            # print the time to the user.
+            print('Time (s): ', stop - start)
 
             # retrieve the action from the result.
             action = alpha_beta_result[0]
@@ -81,8 +91,17 @@ if __name__ == "__main__":
         # if IA plays second, put its play on the board.
         if not ia_plays_first:
 
+            # retrieve the start time.
+            start = timeit.default_timer()
+
             # get the best move out of the board.
             alpha_beta_result = min_max_algo.alpha_beta_search(board, depth)
+
+            # retrieve the finished action time.
+            stop = timeit.default_timer()
+
+            # print the time to the user.
+            print('Time (s): ', stop - start)
 
             # retrieve the action from the result.
             action = alpha_beta_result[0]
