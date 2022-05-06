@@ -33,7 +33,7 @@ class Board:
         if board_state is not None:
 
             # set our attributes for the copy.
-            self.__first_player = board_state.get_initial_player()
+            self.__player_char = board_state.get_player_char()
             self.__array = deepcopy(board_state.get_current_game_state())
             self.__rows = board_state.get_rows()
             self.__columns = board_state.get_columns()
@@ -43,7 +43,7 @@ class Board:
         else:
 
             # set the first player in the board.
-            self.__first_player = first_player
+            self.__player_char = first_player
 
             self.__counter = 0
             self.__heights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -55,7 +55,7 @@ class Board:
             # create an empty board of rows * columns.
             self.__array = deepcopy(utilities.initial_state(self.__columns, self.__rows))
 
-        self.__second_player = 'O' if self.__first_player == 'X' else 'X'
+        self.__ia_char = 'O' if self.__player_char == 'X' else 'X'
 
     def get_counter(self):
         return self.__counter
@@ -66,10 +66,10 @@ class Board:
     def get_array(self):
         return self.__array
 
-    def get_initial_player(self):
+    def get_player_char(self):
 
         # get the char of the first player.
-        return self.__first_player
+        return self.__player_char
 
     def get_current_game_state(self):
 
@@ -86,9 +86,13 @@ class Board:
         # get the amount of columns in the board.
         return self.__columns
 
-    def current_player(self):
+    def get_current_player_char(self):
 
-        return self.__first_player if self.__counter % 2 == 0 else self.__second_player
+        return self.__player_char if self.__counter % 2 == 0 else self.__ia_char
+
+    def get_ia_char(self):
+
+        return self.__ia_char
 
     def get_allowed_actions(self):
 
@@ -108,7 +112,7 @@ class Board:
     def set(self, column):
 
         # set the slot to the player who needs to play.
-        self.__array[self.__rows - 1 - self.__heights[column]][column] = self.current_player()
+        self.__array[self.__rows - 1 - self.__heights[column]][column] = self.get_current_player_char()
         self.__heights[column] += 1
         self.__counter += 1
 
@@ -156,31 +160,31 @@ class Board:
 
         return None
 
-    #who_am_i represents the player we want to win, so that we decide wether the score should be positive or negative
-    def get_winner_as_int(self, who_won, who_am_i):
+    def get_winner_as_int(self):
 
         # get the winner from the board.
-        #who_won = self.get_winner()
+        who_won = self.get_winner()
 
         # if X won, return 1
-        if who_won == who_am_i:
+        if who_won == self.get_player_char():
             return 1
 
-
-        # return 0 if it's a draw.
-        else:
+        # if O won, return -1
+        elif who_won == self.get_ia_char():
             return -1
 
+        # else it's a draw, return 0
+        else:
+            return 0
+
     def has_game_ended(self):
-        
+
         # first check for a winner:
         winner = self.get_winner()
-        if (winner is not None):
-            return winner
 
         # let's check if the board is full or if there is a winner.
-        if ' ' not in set(self.__array[0]):
-            return 'Draw'
+        if winner is not None or (self.__array != utilities.initial_state(self.__columns, self.__rows)).all():
+            return True
 
         # else return False.
         return False
