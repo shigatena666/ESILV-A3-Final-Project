@@ -42,10 +42,15 @@ if __name__ == "__main__":
         if ia_plays_first:
 
             # get the best move out of the board.
-            action = min_max_algo.alpha_beta_search(board, depth)
-            print(action)
-            # actualize the board state.
-            board = new_game_state(board, action[0])
+            alpha_beta_result = min_max_algo.alpha_beta_search(board, depth)
+
+            # retrieve the action from the result.
+            action = alpha_beta_result[0]
+
+            print(alpha_beta_result)
+
+            # actualize the board state with the action.
+            board = new_game_state(board, action)
 
             # if true, it means there is a winner.
             if board.has_game_ended():
@@ -64,6 +69,7 @@ if __name__ == "__main__":
 
         # check if user provided right input coordonates.
         while coordonates not in board.get_allowed_actions():
+
             # re-actualize user inputs.
             print("[Error]: Please provided a non-full column.")
             coordonates = input("x:")
@@ -81,10 +87,15 @@ if __name__ == "__main__":
         if not ia_plays_first:
 
             # get the best move out of the board.
-            action = min_max_algo.alpha_beta_search(board, depth)
-            print(action)
+            alpha_beta_result = min_max_algo.alpha_beta_search(board, depth)
+
+            # retrieve the action from the result.
+            action = alpha_beta_result[0]
+
+            print(alpha_beta_result)
+
             # actualize the board state.
-            board = new_game_state(board, action[0])
+            board = new_game_state(board, action)
 
             # if true, it means there is a winner.
             if board.has_game_ended():

@@ -53,7 +53,7 @@ class Board:
             self.__columns = columns
 
             # create an empty board of rows * columns.
-            self.__array = deepcopy(utilities.initial_state(self.__columns, self.__rows))
+            self.__array = deepcopy(utilities.initial_state(self.__rows, self.__columns))
 
         self.__ia_char = 'O' if self.__player_char == 'X' else 'X'
 
@@ -183,7 +183,7 @@ class Board:
         winner = self.get_winner()
 
         # let's check if the board is full or if there is a winner.
-        if winner is not None or (self.__array != utilities.initial_state(self.__columns, self.__rows)).all():
+        if winner is not None or (self.__array != utilities.initial_state(self.__rows, self.__columns)).all():
             return True
 
         # else return False.
