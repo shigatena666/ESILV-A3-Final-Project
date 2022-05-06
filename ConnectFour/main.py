@@ -1,8 +1,4 @@
 from min_max_algorithm import *
-from board import *
-from utilities import *
-import math
-from random import choice
 
 
 def new_game_state(board_state, action_move):
@@ -30,7 +26,6 @@ if __name__ == "__main__":
 
     # get who should play first, IA or player ?
     ia_plays_first = bool(int(input('IA should play first ? (Answer 1 if yes, 0 otherwise)')))
-    K_PLAYER = 'X' if ia_plays_first else 'O'
 
     # show the initial game state.
     print(board)

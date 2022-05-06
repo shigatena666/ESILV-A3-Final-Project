@@ -27,7 +27,7 @@ DETECTION_KERNELS = [HORIZONTAL_KERNEL,
 class Board:
 
     # TODO: Replace O and X by consts.
-    def __init__(self, board_state=None, first_player='X', rows=6, columns=12):
+    def __init__(self, first_player='X', rows=6, columns=12, board_state=None):
 
         # check if a board has been provided for copy.
         if board_state is not None:
@@ -123,7 +123,7 @@ class Board:
 
         # create a deep-copy of the board.
 
-        new_board = Board(self)
+        new_board = Board(self.__player_char, self.__rows, self.__columns, self)
 
         # set the actions and return the new board.
         new_board.set(column)
