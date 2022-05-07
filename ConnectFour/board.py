@@ -188,6 +188,7 @@ class Board:
 
         # cache the winner to prevent performances loss.
         self.__winner = winner
+        print(self.__counter)
 
         # let's check if the board is full or if there is a winner.
         if winner is not None \

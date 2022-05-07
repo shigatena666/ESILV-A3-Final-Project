@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
             # if true, it means there is a winner.
             if board.has_game_ended():
-                print(board.__find_winner(), "won")
+                print(board.get_winner(), "won")
                 break
 
         # ask the user to play and set it inside the board.
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
         # if true, it means there is a winner.
         if board.has_game_ended():
-            print(board.__find_winner(), "won")
+            print(board.get_winner(), "won")
             break
 
         # if IA plays second, put its play on the board.
@@ -113,5 +113,5 @@ if __name__ == "__main__":
 
             # if true, it means there is a winner.
             if board.has_game_ended():
-                print(board.__find_winner(), "won")
+                print(board.get_winner(), "won")
                 break
