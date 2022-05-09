@@ -5,8 +5,6 @@ from board import *
 
 class MinMaxAlgorithm:
 
-    # who_am_i represents the player the AI has been given
-    # returns a tuple containing first the chosen_column and second the score of this column for the iterations
     def alpha_beta_search(self, board_state: Board, depth, alpha=-math.inf, beta=math.inf):
 
         if depth == 0:
@@ -16,9 +14,6 @@ class MinMaxAlgorithm:
         if board_state.has_game_ended():
             return None, board_state.get_winner_as_int()
 
-        # setting possible action list and choosing whether we should minimize or maximize.
-        allowed_actions = board_state.get_allowed_actions()
-
         # let's see if we should start by minimizing or maximizing.
         should_maximize = board_state.get_current_player_char() == board_state.get_player_char()
 
@@ -27,7 +22,7 @@ class MinMaxAlgorithm:
         chosen_column = None
 
         # iterate through all possible actions on the board.
-        for allowed_action in allowed_actions:
+        for allowed_action in board_state.get_allowed_actions():
 
             # get the board result.
             board_result = board_state.result(allowed_action)

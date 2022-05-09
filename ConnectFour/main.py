@@ -52,7 +52,7 @@ if __name__ == "__main__":
             # retrieve the action from the result.
             action = alpha_beta_result[0]
 
-            print(alpha_beta_result)
+            print(alpha_beta_result[0] + 1)
 
             # actualize the board state with the action.
             board = new_game_state(board, action)
@@ -74,7 +74,7 @@ if __name__ == "__main__":
             coordonates = int(input("x: "))
 
         # check if user provided right input coordonates.
-        while coordonates not in board.get_allowed_actions():
+        while coordonates - 1 not in board.get_allowed_actions():
 
             # re-actualize user inputs.
             print("[Error]: Please provided a non-full column.")
@@ -106,7 +106,7 @@ if __name__ == "__main__":
             # retrieve the action from the result.
             action = alpha_beta_result[0]
 
-            print(alpha_beta_result)
+            print(alpha_beta_result[0] + 1)
 
             # actualize the board state.
             board = new_game_state(board, action)

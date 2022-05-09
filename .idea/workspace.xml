@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98c089f1-1c17-4ece-b60a-50a3a3267e40" name="Changes" comment="">
+    <list default="true" id="bb588a19-8fe2-484e-a0fa-c61693cf01c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConnectFour/bitboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/bitboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConnectFour/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/board.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConnectFour/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConnectFour/min_max_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/min_max_algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tic-Tac-Toe/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tic-Tac-Toe/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tic-Tac-Toe/min_max_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tic-Tac-Toe/min_max_algorithm.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,10 +106,62 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Tic_tac_toe (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Projet" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Downloads" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Downloads/Tic_tac_toe (2).py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Tic_tac_toe (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Projet" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../../../../Containers/com.apple.mail/Data/Library/Mail Downloads/C4D882C0-D25B-4685-A124-50336A000D83" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../../../../../Containers/com.apple.mail/Data/Library/Mail Downloads/C4D882C0-D25B-4685-A124-50336A000D83/Tic_tac_toe (2).py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.Tic-Tac-Toe" />
       <item itemvalue="Python.ConnectFour" />
+      <item itemvalue="Python.Tic_tac_toe (2)" />
+      <item itemvalue="Python.Tic_tac_toe (1)" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Tic_tac_toe (1)" />
+        <item itemvalue="Python.Tic_tac_toe (2)" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -142,7 +198,9 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Projet$TicTacToe.coverage" NAME="TicTacToe Coverage Results" MODIFIED="1651738445378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tic-Tac-Toe" />
-    <SUITE FILE_PATH="coverage/Projet$Tic_Tac_Toe.coverage" NAME="Tic-Tac-Toe Coverage Results" MODIFIED="1651826552886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tic-Tac-Toe" />
-    <SUITE FILE_PATH="coverage/Projet$ConnectFour.coverage" NAME="ConnectFour Coverage Results" MODIFIED="1651949661804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ConnectFour" />
+    <SUITE FILE_PATH="coverage/Projet$Tic_Tac_Toe.coverage" NAME="Tic-Tac-Toe Coverage Results" MODIFIED="1652103141391" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tic-Tac-Toe" />
+    <SUITE FILE_PATH="coverage/Projet$ConnectFour.coverage" NAME="ConnectFour Coverage Results" MODIFIED="1652117371857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ConnectFour" />
+    <SUITE FILE_PATH="coverage/Projet$Tic_tac_toe__1_.coverage" NAME="Tic_tac_toe (1) Coverage Results" MODIFIED="1652112663691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Downloads" />
+    <SUITE FILE_PATH="coverage/Projet$Tic_tac_toe__2_.coverage" NAME="Tic_tac_toe (2) Coverage Results" MODIFIED="1652111857101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../../../../../Containers/com.apple.mail/Data/Library/Mail Downloads/C4D882C0-D25B-4685-A124-50336A000D83" />
   </component>
 </project>

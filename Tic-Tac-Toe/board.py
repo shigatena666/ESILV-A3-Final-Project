@@ -150,6 +150,9 @@ class Board:
 
     def get_winner_as_int(self):
 
+        # note: this could be cached, but as we don't have much time and it's not necessary to have good performances
+        # on the tic-tac-toe, we will let it that way.
+
         # get the winner from the board.
         who_won = self.get_winner()
 
@@ -166,6 +169,8 @@ class Board:
             return 0
 
     def has_game_ended(self):
+
+        # note: this could be shortened but for reading purposes we chose to let it that way.
 
         # let's check if the board is full or if there is a winner.
         if (self.__array != utilities.initial_state()).all() or self.get_winner() is not None:

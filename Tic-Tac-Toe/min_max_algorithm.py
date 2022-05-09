@@ -21,8 +21,7 @@ class MinMaxAlgorithm:
             # get the score of the move depending on maximizing or minimizing.
             # this will get the score recursively, by trying to find the best move for the AI whilst still taking in
             # consideration the best move for the opponent.
-            # This will either result in a win for the AI or a draw.
-
+            # this will either result in a win for the AI or a draw.
             if should_minimize:
                 action_score = self.min_value(board_state.result(allowed_action),
                                               -math.inf,

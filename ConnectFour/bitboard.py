@@ -1,4 +1,6 @@
 from copy import deepcopy
+
+
 class BitBoard:
 
     def __init__(self, first_player='X'):
@@ -46,10 +48,10 @@ class BitBoard:
 
         # get the boards for X and O.
         return self.__encoded_boards
-    
+
     def result(self, action):
-        
-        #Returns a new board with the action done without changing the current board
+
+        # returns a new board with the action done without changing the current board
         self.set(action)
         new_board = deepcopy(self)
         self.unset()

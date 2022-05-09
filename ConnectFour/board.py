@@ -26,7 +26,7 @@ DETECTION_KERNELS = [HORIZONTAL_KERNEL,
 
 class Board:
 
-    def __init__(self, first_player='X', rows=6, columns=12, board_state=None):
+    def __init__(self, player_char='X', rows=6, columns=12, board_state=None):
 
         # check if a board has been provided for copy.
         if board_state is not None:
@@ -43,7 +43,7 @@ class Board:
         else:
 
             # set the first player in the board.
-            self.__player_char = first_player
+            self.__player_char = player_char
 
             self.__counter = 0
             self.__heights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -61,15 +61,18 @@ class Board:
         self.__ia_char = 'O' if self.__player_char == 'X' else 'X'
 
     def get_counter(self):
+
+        # get the counter to know which player's turn it is.
         return self.__counter
 
     def get_heights(self):
+
+        # get the heights to know which slots are free on a given column.
         return self.__heights
 
-    def get_array(self):
-        return self.__array
-
     def get_winner(self):
+
+        # get the cached winner of the game.
         return self.__winner
 
     def get_player_char(self):
@@ -170,11 +173,11 @@ class Board:
     def get_winner_as_int(self):
 
         # retrieve the cached winner, if X won, return 1.
-        if self.__winner == self.get_player_char():
+        if self.__winner == self.__player_char:
             return 1
 
         # if O won, return -1.
-        elif self.__winner == self.get_ia_char():
+        elif self.__winner == self.__ia_char:
             return -1
 
         # else it's a draw, return 0.
@@ -188,8 +191,8 @@ class Board:
 
         # cache the winner to prevent performances loss.
         self.__winner = winner
-        print(self.__counter)
 
+        # note: this could be shortened but for reading purposes we chose to let it that way.
         # let's check if the board is full or if there is a winner.
         if winner is not None \
                 or (self.__array != utilities.initial_state(self.__rows, self.__columns)).all()\
