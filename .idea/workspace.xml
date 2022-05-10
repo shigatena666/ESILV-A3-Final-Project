@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb588a19-8fe2-484e-a0fa-c61693cf01c2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConnectFour/bitboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/bitboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConnectFour/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConnectFour/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConnectFour/min_max_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/ConnectFour/min_max_algorithm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tic-Tac-Toe/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tic-Tac-Toe/board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tic-Tac-Toe/min_max_algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tic-Tac-Toe/min_max_algorithm.py" afterDir="false" />
-    </list>
+    <list default="true" id="bb588a19-8fe2-484e-a0fa-c61693cf01c2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
