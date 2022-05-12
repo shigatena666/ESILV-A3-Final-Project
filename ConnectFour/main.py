@@ -25,8 +25,18 @@ if __name__ == "__main__":
     board = Board()
     min_max_algo = MinMaxAlgorithm()
 
+    # ask the user the input.
+    user_input = input('IA should play first ? (Answer 1 if yes, 0 otherwise)')
+
+    # validate it as long as it's not a char.
+    while not user_input.isdigit():
+
+        # re-actualize user inputs.
+        print("[Error]: Please provide a valid char number.")
+        user_input = input("You should enter a number that is 0 or 1: ")
+
     # get who should play first, IA or player ?
-    ia_plays_first = bool(int(input('IA should play first ? (Answer 1 if yes, 0 otherwise)')))
+    ia_plays_first = bool(int(user_input))
 
     # show the initial game state.
     print(board)
@@ -63,8 +73,16 @@ if __name__ == "__main__":
                 break
 
         # ask the user to play and set it inside the board.
+        user_input = input("x: ")
 
-        coordonates = int(input("x: "))
+        # validate the user input.
+        while not user_input.isdigit():
+
+            # re-actualize user inputs.
+            print("[Error]: Please provide a valid char number.")
+            user_input = input("x: ")
+
+        coordonates = int(user_input)
 
         # check if user provided right input types.
         while not (1 <= coordonates <= columns):

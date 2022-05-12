@@ -1,3 +1,4 @@
+import random
 from copy import deepcopy, copy
 from scipy.signal import convolve2d
 
@@ -117,6 +118,7 @@ class Board:
                 actions.append(column)
 
         # return our array of actions.
+        random.shuffle(actions)
         return np.array(actions)
 
     def __set(self, column):
